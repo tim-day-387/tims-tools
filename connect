@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# usage: connect [ssh args]
+#
+#     This script is a wrapper around ssh which includes
+#     several useful arguments.
+#
+
+ssh -A -o TCPKeepAlive=yes \
+    -o ServerAliveCountMax=20 \
+    -o ServerAliveInterval=15 \
+    "$@"

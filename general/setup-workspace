@@ -1,0 +1,18 @@
+#!/bin/bash
+mkdir -p ~/Programming
+cd ~/Programming
+
+
+# Personal repos
+git clone https://github.com/tim-day-387/tims-tools
+git clone https://github.com/tim-day-387/screen-custom
+
+
+# Useful tools
+git clone https://github.com/stacked-git/stgit
+
+
+# Projects
+git clone git://git.whamcloud.com/fs/lustre-release.git
+git clone https://github.com/openzfs/zfs.git
+git clone https://github.com/torvalds/linux.git

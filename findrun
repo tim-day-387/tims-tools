@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# usage: findrun [find args] [findrun args] -run [command]
+#
+#     This command applies a command to each file found
+#     using the find command.
+#
+#     -show     Show the output of the command, otherwise show
+#               the path instead.
+#
+
+in_run_cmd="false"
+have_find_path="false"
+show_output="false"
+
+find_args=""
+find_path=""
+run_cmd=""
+
+for arg in "$@"
+do
+    case "$arg" in
+	-run)
+	    in_run_cmd="true"
+	    continue
+	    ;;
+	-show)
+	    show_output="true"
+	    continue
+	    ;;
+	*)
+	    ;;
+    esac
+
+    if [[ "$have_find_path" == "false" ]]; then
+	have_find_path="true"
+	find_path="$arg"
+	continue
+    fi
+
+    if [[ "$in_run_cmd" == "false" ]]; then
+	find_cmd="$find_cmd $arg"
+    else
+	run_cmd="$run_cmd $arg"
+    fi
+done
+
+echo "Commands:"
+echo " find $find_path$find_cmd"
+echo "$run_cmd"
+echo
+
+output=$(eval 'find "$find_path" $find_cmd')
+exitcode=$?
+
+mapfile -t files <<< "$output"
+
+echo "Results:"
+
+if [[ "$output" == "" ]]; then
+    echo " No matching files!"
+    exit
+fi
+
+for file in "${files[@]}"; do
+    cmd_output=$(eval '$run_cmd "$file"')
+    cmd_exitcode=$?
+
+    if [[ "$show_output" == "true" ]]; then
+	printf "%5s %3s %5s %10s\n" "exit:" "$cmd_exitcode" "output:" "$cmd_output"
+    else
+	printf "%5s %3s %5s %10s\n" "exit:" "$cmd_exitcode" "path:" "$file"
+    fi
+done
