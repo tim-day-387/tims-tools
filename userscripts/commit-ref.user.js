@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         GitWeb: copy commit reference
-// @version      2
+// @version      3
 // @author       Andrei Rybak
 // @description  Adds a "Copy commit reference" button to every commit page on GitWeb websites.
+// @license      AGPL-3.0-only
 // @match        https://git.whamcloud.com/*a=commit*
 // ==/UserScript==
 
@@ -10,6 +11,18 @@
 
 /*
  * Copyright (C) 2023 Andrei Rybak
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  * Forked by Timothy Day for use with Lustre development
  *
