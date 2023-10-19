@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         GitWeb: copy commit reference
-// @version      1
+// @version      2
 // @author       Andrei Rybak
 // @description  Adds a "Copy commit reference" button to every commit page on GitWeb websites.
+// @match        https://git.whamcloud.com/*a=commit*
 // ==/UserScript==
 
 // SPDX-License-Identifier: AGPL-3.0-only
