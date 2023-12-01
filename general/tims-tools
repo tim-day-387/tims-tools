@@ -17,17 +17,12 @@
 # information.
 #
 fetch() {
-    echo
-    echo "  _____  _____ "
-    echo " |_   _||_   _|"
-    echo "   | |    | |  "
-    echo "   |_|    |_|  "
-    echo
-    echo " Tims Tools"
-    echo
-    echo " Kernel: $(uname -r)"
-    echo " OS: $(lsb_release -d -s)"
-    echo
+    echo "+----------------+  [Tims Tools]"
+    echo "|  _____  _____  |  [Kernel: $(uname -r)]"
+    echo "| |_   _||_   _| |  [OS: $(lsb_release -d -s)]"
+    echo "|   | |    | |   |  [Host: $(hostname)]"
+    echo "|   |_|    |_|   |  [Arch: $(arch)]"
+    echo "+----------------+  [CPUs: $(nproc)]"
 }
 
 #
@@ -148,6 +143,13 @@ install_tools() {
 }
 
 #
+# Update tims-tools
+#
+tims-tools-update() {
+    curl -sSf https://raw.githubusercontent.com/tim-day-387/tims-tools/main/general/tims-tools > ~/.tt_profile
+}
+
+#
 # Interactive version of tims-tools
 #
 main() {
@@ -176,4 +178,14 @@ main() {
 # Only run the interactive mode if TT_INTER is defined
 if ! [[ -z ${TT_INTER+x} ]]; then
     main
+    exit
 fi
+
+# Display login message
+fetch
+
+# Custom prompt
+PS1="[\u][\h][\w]\$ "
+
+# Custom aliases
+alias emacs="emacs -nw"
