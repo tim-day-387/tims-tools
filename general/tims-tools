@@ -147,24 +147,33 @@ install_tools() {
     fi
 }
 
-PS3="Select a command: "
+#
+# Interactive version of tims-tools
+#
+main() {
+    PS3="Select a command: "
+    select opt in fetch setup install quit; do
+	case $opt in
+	    fetch)
+		fetch
+		;;
+	    setup)
+		setup_workspace
+		;;
+	    install)
+		install_tools
+		;;
+	    quit)
+		break
+		;;
+	    *)
+		echo "Invalid option $REPLY"
+		;;
+	esac
+    done
+}
 
-select opt in fetch setup install quit; do
-    case $opt in
-	fetch)
-	    fetch
-	    ;;
-	setup)
-	    setup_workspace
-	    ;;
-	install)
-	    install_tools
-	    ;;
-	quit)
-	    break
-	    ;;
-	*) 
-	    echo "Invalid option $REPLY"
-	    ;;
-    esac
-done
+# Only run the interactive mode if TT_INTER is defined
+if ! [[ -z ${TT_INTER+x} ]]; then
+    main
+fi
