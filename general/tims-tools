@@ -193,8 +193,15 @@ fi
 # Display login message
 tims-tools-fetch
 
+# Test if in ssh session
+if [[ -z ${SSH_CLIENT+x} ]]; then
+    export SSH_PROMPT="\e[32m[local]\e[0m"
+else
+    export SSH_PROMPT="\e[31m[ssh]\e[0m"
+fi
+
 # Custom prompt
-PS1="[\u][\h][\w]\$ "
+PS1="$SSH_PROMPT[\u][\h][\w]\$ "
 
 # Increase history size
 export HISTSIZE=25000
