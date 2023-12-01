@@ -16,7 +16,7 @@
 # Display a logo and some common system
 # information.
 #
-fetch() {
+function tims-tools-fetch() {
     if [[ -f /etc/os-release ]]; then
 	source /etc/os-release
 	OS=$NAME
@@ -35,7 +35,7 @@ fetch() {
 # Download repos I use commonly, and put them
 # in the Programming directory
 #
-setup_workspace() {
+function tims-tools-setup-workspace() {
     mkdir -p ~/Programming
     cd ~/Programming
 
@@ -59,7 +59,7 @@ setup_workspace() {
 # Install useful packages and perform some
 # minimal setup.
 #
-install_tools() {
+function tims-tools-install-tools() {
     use_apt=false
     has_pkg_manager=false
 
@@ -151,27 +151,27 @@ install_tools() {
 #
 # Update tims-tools
 #
-tims-tools-update() {
+function tims-tools-update() {
     curl -sSf https://raw.githubusercontent.com/tim-day-387/tims-tools/main/general/tims-tools > ~/.tt_profile
 }
 
 #
 # Interactive version of tims-tools
 #
-main() {
+function tims-tools-main() {
     PS3="Select a command: "
-    select opt in fetch setup install get-config quit; do
+    select opt in fetch setup install update quit; do
 	case $opt in
 	    fetch)
-		fetch
+		tims-tools-fetch
 		;;
 	    setup)
-		setup_workspace
+		tims-tools-setup-workspace
 		;;
 	    install)
-		install_tools
+		tims-tools-install-tools
 		;;
-	    get-config)
+	    update)
 		tims-tools-update
 		;;
 	    quit)
@@ -186,7 +186,7 @@ main() {
 
 # Only run the interactive mode if TT_INTER is defined
 if ! [[ -z ${TT_INTER+x} ]]; then
-    main
+    tims-tools-main
     exit
 fi
 
