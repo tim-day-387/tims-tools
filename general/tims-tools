@@ -154,7 +154,7 @@ tims-tools-update() {
 #
 main() {
     PS3="Select a command: "
-    select opt in fetch setup install quit; do
+    select opt in fetch setup install get-config quit; do
 	case $opt in
 	    fetch)
 		fetch
@@ -164,6 +164,9 @@ main() {
 		;;
 	    install)
 		install_tools
+		;;
+	    get-config)
+		tims-tools-update
 		;;
 	    quit)
 		break
@@ -186,6 +189,10 @@ fetch
 
 # Custom prompt
 PS1="[\u][\h][\w]\$ "
+
+# Increase history size
+export HISTSIZE=25000
+export HISTFILESIZE=25000
 
 # Custom aliases
 alias emacs="emacs -nw"
