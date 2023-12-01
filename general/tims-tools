@@ -17,9 +17,15 @@
 # information.
 #
 fetch() {
+    if [[ -f /etc/os-release ]]; then
+	source /etc/os-release
+	OS=$NAME
+	VER=$VERSION_ID
+    fi
+
     echo "+----------------+  [Tims Tools]"
     echo "|  _____  _____  |  [Kernel: $(uname -r)]"
-    echo "| |_   _||_   _| |  [OS: $(lsb_release -d -s)]"
+    echo "| |_   _||_   _| |  [OS: $(echo $OS $VER)]"
     echo "|   | |    | |   |  [Host: $(hostname)]"
     echo "|   |_|    |_|   |  [Arch: $(arch)]"
     echo "+----------------+  [CPUs: $(nproc)]"
