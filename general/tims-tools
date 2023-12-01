@@ -191,7 +191,7 @@ if ! [[ -z ${TT_INTER+x} ]]; then
 fi
 
 # Display login message
-fetch
+tims-tools-fetch
 
 # Custom prompt
 PS1="[\u][\h][\w]\$ "
