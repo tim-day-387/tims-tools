@@ -10,11 +10,22 @@
 trap 'runtest-failure' ERR
 
 #
-# Function called on failure
+# Function called on failure, used to log
+# errors
 #
 function runtest-failure() {
-    echo "Sourcing script failed!"
+    echo "Sourcing script failed!" > ./error.log
 }
 
-set -e
+# Remove old error log, if there
+rm -f ./error.log
+
+set -Ee
 source ./general/tims-tools
+
+# If we have an error.log, we had an error
+if [[ -f ./error.log ]]; then
+    cat ./error.log
+    rm -f ./error.log
+    exit 1
+fi
