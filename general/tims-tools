@@ -17,18 +17,19 @@
 # information.
 #
 function tims-tools-fetch() {
-    if [[ -f /etc/os-release ]]; then
+    if [[ "$TT_PLATFORM" = "linux" ]]; then
+	num_cpus=$(nproc)
+
 	source /etc/os-release
 	OS=$NAME
 	VER=$VERSION_ID
     fi
 
-    if [[ "$TT_PLATFORM" = "linux" ]]; then
-	num_cpus=$(nproc)
-    fi
-
     if [[ "$TT_PLATFORM" = "mac" ]]; then
 	num_cpus=$(sysctl -n hw.ncpu)
+
+	OS=$(sw_vers -productName)
+	VER=$(sw_vers -productVersion)
     fi
 
     echo "+----------------+  [Tims Tools]"
