@@ -23,12 +23,20 @@ function tims-tools-fetch() {
 	VER=$VERSION_ID
     fi
 
+    if [[ "$TT_PLATFORM" = "linux" ]]; then
+	num_cpus=$(nproc)
+    fi
+
+    if [[ "$TT_PLATFORM" = "mac" ]]; then
+	num_cpus=$(sysctl -n hw.ncpu)
+    fi
+
     echo "+----------------+  [Tims Tools]"
     echo "|  _____  _____  |  [Kernel: $(uname -r)]"
     echo "| |_   _||_   _| |  [OS: $(echo $OS $VER)]"
     echo "|   | |    | |   |  [Host: $(hostname)]"
     echo "|   |_|    |_|   |  [Arch: $(arch)]"
-    echo "+----------------+  [CPUs: $(nproc)]"
+    echo "+----------------+  [CPUs: $num_cpus]"
 }
 
 #
@@ -189,6 +197,25 @@ if ! [[ -z ${TT_INTER+x} ]]; then
     tims-tools-main
     exit
 fi
+
+# Check platform and set TT_PLATFORM
+case "$(uname -sr)" in
+    Darwin*)
+	export TT_PLATFORM="mac"
+	;;
+    Linux*Microsoft*)
+	export TT_PLATFORM="wsl"
+	;;
+    Linux*)
+	export TT_PLATFORM="linux"
+	;;
+    CYGWIN*|MINGW*|MINGW32*|MSYS*)
+	export TT_PLATFORM="cygwin"
+	;;
+    *)
+	export TT_PLATFORM="other"
+	;;
+esac
 
 # Display login message
 tims-tools-fetch
