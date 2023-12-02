@@ -1,0 +1,20 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0
+#
+# Copyright (c) 2023 - Timothy Day <tday141@gmail.com>
+#
+# Fail on any error and source tims-tools. This should
+# be enough to test the tims-tools script.
+#
+
+trap 'runtest-failure' ERR
+
+#
+# Function called on failure
+#
+function runtest-failure() {
+    echo "Sourcing script failed!"
+}
+
+set -e
+source ./general/tims-tools
