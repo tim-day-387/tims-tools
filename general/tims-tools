@@ -32,9 +32,11 @@ function tims-tools-fetch() {
 	VER=$(sw_vers -productVersion)
     fi
 
+    export TT_OS="$OS $VER"
+
     echo "+----------------+  [Tims Tools]"
     echo "|  _____  _____  |  [Kernel: $(uname -r)]"
-    echo "| |_   _||_   _| |  [OS: $(echo $OS $VER)]"
+    echo "| |_   _||_   _| |  [OS: $(echo $TT_OS)]"
     echo "|   | |    | |   |  [Host: $(hostname)]"
     echo "|   |_|    |_|   |  [Arch: $(arch)]"
     echo "+----------------+  [CPUs: $num_cpus]"
@@ -221,15 +223,23 @@ esac
 # Display login message
 tims-tools-fetch
 
+# ANSI codes
+TT_GREEN="\[$(tput setaf 2)\]"
+TT_RED="\[$(tput setaf 1)\]"
+TT_RESET="\[$(tput sgr0)\]"
+
 # Test if in ssh session
 if [[ -z ${SSH_CLIENT+x} ]]; then
-    export SSH_PROMPT="\e[32m[local]\e[0m"
+    export SSH_PROMPT="$TT_GREEN[\u]$TT_RESET"
 else
-    export SSH_PROMPT="\e[31m[ssh]\e[0m"
+    export SSH_PROMPT="$TT_RED[\u]$TT_RESET"
 fi
 
+# Custom title
+TT_TITLE="\[\e]2;$TT_OS\a\]"
+
 # Custom prompt
-PS1="$SSH_PROMPT[\u][\h][\w]\$ "
+PS1="$TT_TITLE$SSH_PROMPT[\$?][\w]\$ "
 
 # Increase history size
 export HISTSIZE=25000
